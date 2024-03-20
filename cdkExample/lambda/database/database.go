@@ -19,11 +19,11 @@ type DynamoDBClient struct {
 	databaseStore *dynamodb.DynamoDB
 }
 
-func NewDynamoDB() *DynamoDBClient {
+func NewDynamoDB() DynamoDBClient {
 	dbSession := session.Must(session.NewSession())
 	db := dynamodb.New(dbSession)
 
-	return &DynamoDBClient{
+	return DynamoDBClient{
 		databaseStore: db,
 	}
 }

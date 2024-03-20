@@ -13,8 +13,8 @@ type ApiHandler struct {
 	dbStore database.DynamoDBClient
 }
 
-func NewApiHandler(dbStore database.DynamoDBClient) *ApiHandler {
-	return &ApiHandler{
+func NewApiHandler(dbStore database.DynamoDBClient) ApiHandler {
+	return ApiHandler{
 		dbStore: dbStore,
 	}
 }
