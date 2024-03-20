@@ -19,7 +19,7 @@ const (
 
 type UserStore interface {
 	DoesUserExist(username string) (bool, error)
-	InsertUser(user *types.User) error
+	InsertUser(user types.User) error
 	GetUser(username string) (types.User, error)
 }
 
@@ -27,11 +27,11 @@ type DynamoDBClient struct {
 	databaseStore *dynamodb.DynamoDB
 }
 
-func NewDynamoDB() *DynamoDBClient {
+func NewDynamoDB() DynamoDBClient {
 	dbSession := session.Must(session.NewSession())
 	db := dynamodb.New(dbSession)
 
-	return &DynamoDBClient{
+	return DynamoDBClient{
 		databaseStore: db,
 	}
 }
@@ -41,7 +41,7 @@ func NewDynamoDB() *DynamoDBClient {
 // - if they do, we return an error
 // - if they DONT, that is when we INSERT the user into the DB
 
-func (u *DynamoDBClient) DoesUserExist(username string) (bool, error) {
+func (u DynamoDBClient) DoesUserExist(username string) (bool, error) {
 	result, err := u.databaseStore.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(TABLE_NAME),
 		Key: map[string]*dynamodb.AttributeValue{
@@ -62,7 +62,7 @@ func (u *DynamoDBClient) DoesUserExist(username string) (bool, error) {
 	return true, nil
 }
 
-func (u *DynamoDBClient) InsertUser(user *types.User) error {
+func (u DynamoDBClient) InsertUser(user types.User) error {
 	// we are assembling our item
 	item := &dynamodb.PutItemInput{
 		TableName: aws.String(TABLE_NAME),
@@ -85,7 +85,7 @@ func (u *DynamoDBClient) InsertUser(user *types.User) error {
 	return nil
 }
 
-func (u *DynamoDBClient) GetUser(username string) (types.User, error) {
+func (u DynamoDBClient) GetUser(username string) (types.User, error) {
 	var user types.User
 
 	result, err := u.databaseStore.GetItem(&dynamodb.GetItemInput{

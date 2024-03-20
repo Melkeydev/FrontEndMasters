@@ -17,8 +17,8 @@ type ApiHandler struct {
 	dbStore database.UserStore
 }
 
-func NewApiHandler(dbStore database.UserStore) *ApiHandler {
-	return &ApiHandler{
+func NewApiHandler(dbStore database.UserStore) ApiHandler {
+	return ApiHandler{
 		dbStore: dbStore,
 	}
 }
