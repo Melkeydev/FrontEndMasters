@@ -14,16 +14,20 @@ func NewPerson(name string, age int) *Person {
 	}
 }
 
-func (p *Person) changeName(name string) {
-	p.Name = name
+func (p *Person) changeName(newName string) {
+	p.Name = newName
 }
 
 func main() {
-	newPerson := NewPerson("melkey", 27)
-	fmt.Printf("this is my person %+v\n", newPerson)
+	myPerson := NewPerson("Melkey", 26)
+	myPerson.changeName("Marc")
+	fmt.Printf("Ths is my person %+v\n", myPerson)
 
-	newPerson.changeName("marc")
-	fmt.Printf("this is my person %+v\n", newPerson)
+	mySlice := []int{1, 2, 3}
 
-	fmt.Println("this is the memory address of my person", &newPerson)
+	for i := range mySlice {
+		mySlice[i]++
+	}
+
+	fmt.Println("this is the slice", mySlice)
 }

@@ -6,12 +6,12 @@ import (
 )
 
 func main() {
-	newTicket := imports.Ticket{
-		Number: 123,
-		Event:  "theater",
+	myTicket := imports.Ticket{
+		ID:    123,
+		Event: "theater",
 	}
 
-	newTicket.GetTicketNumber()
+	myTicket.ChangeEvent("new event")
 
-	fmt.Println(newTicket)
+	fmt.Println("Hello world")
 }

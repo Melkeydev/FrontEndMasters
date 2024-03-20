@@ -1,12 +1,10 @@
 package imports
 
-import "fmt"
-
 type Ticket struct {
-	Number int
-	Event  string
+	ID    int
+	Event string
 }
 
-func (t Ticket) GetTicketNumber() {
-	fmt.Println(t.Number)
+func (t *Ticket) ChangeEvent(newEvent string) {
+	t.Event = newEvent
 }
