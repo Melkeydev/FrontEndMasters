@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
+	"github.com/aws/aws-cdk-go/awscdk/v2/awsapigateway"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awsdynamodb"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
 	"github.com/aws/constructs-go/constructs/v10"
@@ -36,6 +37,33 @@ func NewCdkExampleStack(scope constructs.Construct, id string, props *CdkExample
 	})
 
 	table.GrantReadWriteData(myFunction)
+
+	// Define the API Gateway
+	api := awsapigateway.NewRestApi(stack, jsii.String("exampleAPI"), &awsapigateway.RestApiProps{
+		DefaultCorsPreflightOptions: &awsapigateway.CorsOptions{
+			AllowHeaders: jsii.Strings("Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key"),
+			AllowMethods: jsii.Strings("GET", "POST", "PUT", "DELETE", "OPTIONS"),
+			AllowOrigins: jsii.Strings("*"),
+		},
+		DeployOptions: &awsapigateway.StageOptions{
+			LoggingLevel:     awsapigateway.MethodLoggingLevel_INFO,
+			DataTraceEnabled: jsii.Bool(true),
+		},
+		EndpointConfiguration: &awsapigateway.EndpointConfiguration{
+			Types: &[]awsapigateway.EndpointType{awsapigateway.EndpointType_REGIONAL},
+		},
+	})
+
+	// Define Lambda integration
+	integration := awsapigateway.NewLambdaIntegration(myFunction, nil)
+
+	// Define the '/register' resource and method
+	registerResource := api.Root().AddResource(jsii.String("register"), nil)
+	registerResource.AddMethod(jsii.String("POST"), integration, nil)
+
+	// Define the '/login' resource and method
+	loginResource := api.Root().AddResource(jsii.String("login"), nil)
+	loginResource.AddMethod(jsii.String("POST"), integration, nil)
 
 	return stack
 }

@@ -11,7 +11,7 @@ type App struct {
 
 func NewApp() *App {
 	db := database.NewDynamoDB()
-	apiHandler := api.NewApiHandler(*db)
+	apiHandler := api.NewApiHandler(db)
 
 	return &App{
 		ApiHandler: *apiHandler,
