@@ -16,13 +16,13 @@ type User struct {
 	PasswordHash string `json:"password"`
 }
 
-func NewUser(registerUser RegisterUser) (*User, error) {
+func NewUser(registerUser RegisterUser) (User, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(registerUser.Password), 10)
 	if err != nil {
-		return nil, err
+		return User{}, err
 	}
 
-	return &User{
+	return User{
 		Username:     registerUser.Username,
 		PasswordHash: string(hashedPassword),
 	}, nil

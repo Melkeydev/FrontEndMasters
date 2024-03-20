@@ -17,15 +17,15 @@ type ApiHandler struct {
 	dbStore database.UserStore
 }
 
-func NewApiHandler(dbStore database.UserStore) *ApiHandler {
-	return &ApiHandler{
+func NewApiHandler(dbStore database.UserStore) ApiHandler {
+	return ApiHandler{
 		dbStore: dbStore,
 	}
 }
 
 // The handler our lambda will route to when we need to register our new users
 
-func (api *ApiHandler) RegisterUser(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func (api ApiHandler) RegisterUser(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var registerUser types.RegisterUser
 
 	err := json.Unmarshal([]byte(request.Body), &registerUser)
@@ -82,7 +82,7 @@ func (api *ApiHandler) RegisterUser(request events.APIGatewayProxyRequest) (even
 	}, nil
 }
 
-func (api *ApiHandler) LoginUser(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func (api ApiHandler) LoginUser(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	type LoginRequest struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
