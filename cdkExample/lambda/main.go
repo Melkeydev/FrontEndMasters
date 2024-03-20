@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"lambda-func/app"
+	"lambda-func/middleware"
 	"net/http"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -22,6 +23,13 @@ func HandleRequest(event MyEvent) (string, error) {
 	return fmt.Sprintf("Successfully called by - %s", event.Username), nil
 }
 
+func ProtectedHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		Body:       "This is a protected route",
+		StatusCode: http.StatusOK,
+	}, nil
+}
+
 func main() {
 	lambdaApp := app.NewApp()
 	lambda.Start(func(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -30,6 +38,8 @@ func main() {
 			return lambdaApp.ApiHandler.RegisterUser(request)
 		case "/login":
 			return lambdaApp.ApiHandler.LoginUser(request)
+		case "/protected":
+			return middleware.ValidateJWTMiddleware(ProtectedHandler)(request)
 		default:
 			return events.APIGatewayProxyResponse{
 				Body:       "Not found",

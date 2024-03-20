@@ -113,10 +113,11 @@ func (api *ApiHandler) LoginUser(request events.APIGatewayProxyRequest) (events.
 		}, nil
 	}
 
+	accessToken := types.CreateToken(user)
+	successMsg := fmt.Sprintf(`{"access_token": "%s"}`, accessToken)
+
 	return events.APIGatewayProxyResponse{
-		Body:       "Successfully logged in!",
+		Body:       successMsg,
 		StatusCode: http.StatusOK,
 	}, nil
-
-	// Now that we have our user, and our plain text password, we need to validate them
 }
