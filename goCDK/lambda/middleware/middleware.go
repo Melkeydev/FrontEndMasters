@@ -32,7 +32,7 @@ func ValidateJWTMiddleware(next func(request events.APIGatewayProxyRequest) (eve
 			return events.APIGatewayProxyResponse{
 				Body:       "User unauthorized",
 				StatusCode: http.StatusUnauthorized,
-			}, err
+			}, nil
 		}
 
 		expires := int64(claims["expires"].(float64))
