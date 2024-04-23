@@ -63,7 +63,7 @@ curl -X POST AWS_SERVER_URL/register -H "Content-Type: application/json" -d '{"u
 curl -X POST AWS_SERVER_URL/login -H "Content-Type: application/json" -d '{"username":"USERNAME", "password":"PASSWORD"}'
 ```
 
-### Access Protected Rout
+### Access Protected Route
 
 ```bash
 curl -X GET AWS_SERVER_URL/protected -H "Content-Type: application/json" -H "Authorization: Bearer JWT_TOKEN"
