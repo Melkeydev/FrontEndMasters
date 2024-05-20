@@ -31,6 +31,8 @@ Here's [more info](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html
 
 Some users received CloudWatch logging errors during the API Gateway lessons. Logging to CloudWatch is not required, but you can prevent these errors by [following these steps.](https://repost.aws/knowledge-center/api-gateway-cloudwatch-logs)
 
+If you dont want logging, you can add `CloudWatchRole: jsii.Bool(true)` to the RestApiProps object.
+
 ### Gopls Extension
 
 Download the [Gopls Extension](https://github.com/golang/tools/blob/master/gopls/README.md) for your editor
