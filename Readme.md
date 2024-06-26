@@ -25,7 +25,9 @@ In order to complete this course, you should create an **AWS account**, install 
 ```bash
 cdk bootstrap aws://ACCOUNT-NUMBER/REGION
 ```
-Here's [more info](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_bootstrap) about boostrapping the CDK. Your `ACCOUNT-NUMBER` and `REGION` can be found the AWS console.
+Here's [more info](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_bootstrap) about boostrapping the CDK. Your `ACCOUNT-NUMBER` and `REGION` can be found in the AWS console or using the following AWS CLI commands:
+- Get your `ACCOUNT-NUMBER` using the following AWS CLI command `aws sts get-caller-identity --query Account --output text`
+- Get your `REGION` using the following AWS CLI command `aws configure get region`
 
 ### CloudWatch Logs
 
