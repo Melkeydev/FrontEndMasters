@@ -75,6 +75,6 @@ curl -X GET AWS_SERVER_URL/protected -H "Content-Type: application/json" -H "Aut
 
 ## Remove infrastructure create with CDK
 
-To remove the infrastructure created with the AWS CDK, run `cdk destory`. 
+To remove the infrastructure created with the AWS CDK, run `cdk destroy`. 
 
 Before running `cdk destroy`, you'll want to ensure you've added `RemovalPolicy: awscdk.RemovalPolicy_DESTROY` in the `awsdynamodb.TableProps`. 
